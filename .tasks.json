@@ -1,0 +1,44 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run Current Test File",
+      "type": "shell",
+      "command": "mix",
+      "args": ["test", "${relativeFile}"],
+      "options": {
+        "cwd": "${workspaceRoot}"
+      },
+      "problemMatcher": ["$mixCompileError", "$mixCompileWarning", "$mixTestFailure"],
+      "presentation": {
+        "focus": true
+      }
+    },
+    {
+      "label": "Run Focused Test",
+      "type": "shell",
+      "command": "mix",
+      "args": ["test", "${relativeFile}:${lineNumber}"],
+      "options": {
+        "cwd": "${workspaceRoot}"
+      },
+      "problemMatcher": ["$mixCompileError", "$mixCompileWarning", "$mixTestFailure"],
+      "presentation": {
+        "focus": true
+      }
+    },
+    {
+      "label": "Debug Focused Test",
+      "type": "shell",
+      "command": ["iex"],
+      "args": ["-S", "mix", "test", "--trace", "${relativeFile}:${lineNumber}"],
+      "options": {
+        "cwd": "${workspaceRoot}"
+      },
+      "problemMatcher": ["$mixCompileError", "$mixCompileWarning", "$mixTestFailure"],
+      "presentation": {
+        "focus": true
+      }
+    }
+  ]
+}
