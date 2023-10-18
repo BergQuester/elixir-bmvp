@@ -21,6 +21,11 @@ defmodule Bmvp.Articles do
     Repo.all(Article)
   end
 
+  def list_articles_by_author_id(author_id) do
+    query = from(a in Article, where: a.author_id == ^author_id)
+    Repo.all(query)
+  end
+
   @doc """
   Gets a single article.
 

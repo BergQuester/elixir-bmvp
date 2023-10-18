@@ -4,9 +4,12 @@ defmodule BmvpWeb.ArticleLive.Index do
   alias Bmvp.Articles
   alias Bmvp.Articles.Article
 
+  on_mount({BmvpWeb.UserAuth, :mount_current_user})
+
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :articles, Articles.list_articles())}
+    author_id = socket.assigns.current_user.id
+    {:ok, stream(socket, :articles, Articles.list_articles_by_author_id(author_id))}
   end
 
   @impl true

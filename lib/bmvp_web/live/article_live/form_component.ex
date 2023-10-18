@@ -69,6 +69,9 @@ defmodule BmvpWeb.ArticleLive.FormComponent do
   end
 
   defp save_article(socket, :new, article_params) do
+    author_id = socket.assigns.current_user.id
+    article_params = Map.put(article_params, "author_id", author_id)
+
     case Articles.create_article(article_params) do
       {:ok, article} ->
         notify_parent({:saved, article})
