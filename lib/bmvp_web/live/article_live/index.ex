@@ -43,6 +43,13 @@ defmodule BmvpWeb.ArticleLive.Index do
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do
     article = Articles.get_article!(id)
+    current_user_id = socket.assigns.current_user.id
+    if article.author_id != current_user_id do
+      raise """
+      An unauthorized author tried to delete an article #{article.id} by author #{article.author_id}.
+      """
+    end
+
     {:ok, _} = Articles.delete_article(article)
 
     {:noreply, stream_delete(socket, :articles, article)}
