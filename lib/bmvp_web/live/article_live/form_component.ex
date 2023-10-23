@@ -20,7 +20,7 @@ defmodule BmvpWeb.ArticleLive.FormComponent do
         phx-submit="save"
       >
         <.input field={@form[:title]} type="text" label="Title" />
-        <.input field={@form[:content]} type="text" label="Content" />
+        <.input field={@form[:content]} type="textarea" rows="10" label="Content" />
         <:actions>
           <.button phx-disable-with="Saving...">Save Article</.button>
         </:actions>

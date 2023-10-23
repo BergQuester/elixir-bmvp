@@ -19,7 +19,7 @@
   row_click={fn {_id, article} -> JS.navigate(~p"/articles/#{article}") end}
 >
   <:col :let={{_id, article}} label="Title"><%= article.title %></:col>
-  <:col :let={{_id, article}} label="Content"><%= article.content %></:col>
+  <:col :let={{_id, article}} label="Content"><%= String.slice(article.content, 0, 200) %></:col>
   <:action :let={{_id, article}}>
     <div class="sr-only">
       <.link navigate={~p"/articles/#{article}"}>Show</.link>
