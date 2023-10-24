@@ -108,6 +108,11 @@ defmodule Bmvp.Accounts do
     User.email_changeset(user, attrs, validate_email: false)
   end
 
+  def change_user_username(user, attrs \\ %{}) do
+    User.username_changeset(user, attrs)
+  end
+
+
   @doc """
   Emulates that the email will change without actually changing
   it in the database.
@@ -155,6 +160,13 @@ defmodule Bmvp.Accounts do
     Ecto.Multi.new()
     |> Ecto.Multi.update(:user, changeset)
     |> Ecto.Multi.delete_all(:tokens, UserToken.user_and_contexts_query(user, [context]))
+  end
+
+  def update_user_username(user, attrs) do
+    changeset =
+      user
+      |> User.username_changeset(attrs)
+      |> Repo.update
   end
 
   @doc ~S"""

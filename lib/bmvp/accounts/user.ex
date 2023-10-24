@@ -111,6 +111,19 @@ defmodule Bmvp.Accounts.User do
   end
 
   @doc """
+  A user changeset for changing the username.
+
+  It requires the username to change otherwise an error is added.
+  """
+  def username_changeset(user, attrs, opts \\ []) do
+    user
+    |> cast(attrs, [:username])
+    |> validate_length(:username, min: 5, max: 25)
+    |> unsafe_validate_unique(:username, Bmvp.Repo)
+    |> unique_constraint(:username)
+  end
+
+  @doc """
   A user changeset for changing the password.
 
   ## Options
