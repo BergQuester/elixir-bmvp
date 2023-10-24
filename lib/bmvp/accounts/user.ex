@@ -5,6 +5,7 @@ defmodule Bmvp.Accounts.User do
   @foreign_key_type :binary_id
   schema "users" do
     field :email, :string
+    field :username, :string
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
@@ -40,6 +41,12 @@ defmodule Bmvp.Accounts.User do
     |> cast(attrs, [:email, :password])
     |> validate_email(opts)
     |> validate_password(opts)
+    |> add_random_username()
+  end
+
+  defp add_random_username(changeset) do
+    username = "#{Faker.Cat.En.name()}#{Faker.Person.En.last_name()}#{Enum.random(1000..9999)}"
+    put_change(changeset, :username, username)
   end
 
   defp validate_email(changeset, opts) do
