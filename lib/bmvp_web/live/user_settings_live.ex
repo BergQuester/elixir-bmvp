@@ -183,4 +183,39 @@ defmodule BmvpWeb.UserSettingsLive do
         {:noreply, assign(socket, password_form: to_form(changeset))}
     end
   end
+
+  def handle_event("validate_username", params, socket) do
+    %{"user" => user_params} = params
+
+    username_form =
+      socket.assigns.current_user
+      |> Accounts.change_user_username(user_params)
+      |> Map.put(:action, :validate)
+      |> to_form()
+
+    {:noreply, assign(socket, username_form: username_form)}
+  end
+
+  def handle_event("update_username", params, socket) do
+    %{"user" => user_params} = params
+    user = socket.assigns.current_user
+
+    case Accounts.update_user_username(user, user_params) do
+      {:ok, user} ->
+        username_form =
+          user
+          |> Accounts.change_user_username(user_params)
+          |> to_form()
+
+        socket =
+          socket
+          |> put_flash(:info, "Username updated!")
+          |> assign(username_form: username_form, current_user: user)
+
+        {:noreply, socket}
+
+      {:error, changeset} ->
+        {:noreply, assign(socket, username_form: to_form(changeset))}
+    end
+  end
 end
