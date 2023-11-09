@@ -21,6 +21,7 @@ defmodule BmvpWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    live "/u/:username", OverviewLive
   end
 
   # Other scopes may use custom stacks.
