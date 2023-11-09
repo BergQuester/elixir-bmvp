@@ -26,6 +26,12 @@ defmodule Bmvp.Accounts do
     Repo.get_by(User, email: email)
   end
 
+  def get_user_by_username(username) do
+    User
+      |> Repo.get_by(username: username)
+      |> Repo.normalize_one()
+  end
+
   @doc """
   Gets a user by email and password.
 
