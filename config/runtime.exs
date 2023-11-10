@@ -20,6 +20,10 @@ if System.get_env("PHX_SERVER") do
   config :bmvp, BmvpWeb.Endpoint, server: true
 end
 
+config :lemon_ex,
+  api_key: System.get_env("LEMONSQUEEZY_API_KEY"),
+  webhook_secret: System.get_env("LEMONSQUEEZY_WEBHOOK_SECRET")
+
 if config_env() == :prod do
   database_url =
     System.get_env("DATABASE_URL") ||
