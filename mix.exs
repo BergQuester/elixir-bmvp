@@ -46,6 +46,7 @@ defmodule Bmvp.MixProject do
       {:tailwind, "~> 0.2.0", runtime: Mix.env() == :dev},
       {:swoosh, "~> 1.3"},
       {:finch, "~> 0.13"},
+      {:ex_money_sql, "~> 1.8.0"},
       {:faker, "~> 0.17.0"},
       {:lemon_ex, "~> 0.1.4"},
       {:telemetry_metrics, "~> 0.6"},
