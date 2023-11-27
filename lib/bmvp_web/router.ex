@@ -22,6 +22,7 @@ defmodule BmvpWeb.Router do
 
     get "/", PageController, :home
     live "/u/:username", OverviewLive
+    live "/articles/:id", ArticleLive.Show, :show
   end
 
   # Other scopes may use custom stacks.
@@ -74,7 +75,6 @@ defmodule BmvpWeb.Router do
       live "/articles/new", ArticleLive.Index, :new
       live "/articles/:id/edit", ArticleLive.Index, :edit
 
-      live "/articles/:id", ArticleLive.Show, :show
       live "/articles/:id/show/edit", ArticleLive.Show, :edit
     end
   end

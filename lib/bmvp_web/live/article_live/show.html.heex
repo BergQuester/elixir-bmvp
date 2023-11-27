@@ -4,6 +4,11 @@
   </h2>
   
   <div class="article-content mt-10 font-normal text-md">
-    <div><%= Phoenix.HTML.Format.text_to_html(@article.content) %></div>
+    <%= if is_author?(@current_user, @article) do %>
+      <%= Phoenix.HTML.Format.text_to_html(@article.content) %>
+    <% else %>
+      <%= @article.content |> String.slice(0, 400) |> Phoenix.HTML.Format.text_to_html() %>
+      <.button>Buy this article for <%= @article.price %></.button>
+    <% end %>
   </div>  
 </div>
