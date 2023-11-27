@@ -21,6 +21,7 @@ defmodule BmvpWeb.ArticleLive.FormComponent do
       >
         <.input field={@form[:title]} type="text" label="Title" />
         <.input field={@form[:content]} type="textarea" rows="10" label="Content" />
+        <.input field={@form[:price]} type="text" label="Price" />
         <:actions>
           <.button phx-disable-with="Saving...">Save Article</.button>
         </:actions>
