@@ -14,11 +14,15 @@ defmodule BmvpWeb.ArticleLive.Show do
   end
 
   @impl true
-  def handle_params(%{"id" => id}, _, socket) do
+  def handle_params(%{"id" => id} = params, _, socket) do
+    article = Articles.get_article!(id)
+    current_user = socket.assigns.current_user
+    show_full_article = is_author_or_has_valid_token?(current_user, params, article)
     {:noreply,
      socket
+     |> assign(:show_full_article, show_full_article)
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:article, Articles.get_article!(id))}
+     |> assign(:article, article)}
   end
 
   @impl true
@@ -49,11 +53,25 @@ defmodule BmvpWeb.ArticleLive.Show do
     custom_price
   end
 
-  def is_author?(nil, _), do: false
+  def is_author_or_has_valid_token?(current_user, params, article) do
+    is_author?(current_user, article) || has_valid_token?(params, article)
+  end
 
-  def is_author?(current_user, article) do
+  defp is_author?(nil, _), do: false
+
+  defp is_author?(current_user, article) do
     current_user.id == article.author_id
   end
+
+  defp has_valid_token?(%{"token" => token} = _params, article) do
+    case Bmvp.UrlHelper.verify_unique_article_token(token) do
+      {:ok, article_id} -> article_id == article.id
+      _error -> false
+    end
+  end
+
+  defp has_valid_token?(_params, _article), do: false
+
 
   defp page_title(:show), do: "Show Article"
   defp page_title(:edit), do: "Edit Article"

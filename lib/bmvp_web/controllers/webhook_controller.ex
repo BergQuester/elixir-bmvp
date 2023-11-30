@@ -1,5 +1,5 @@
 defmodule BmvpWeb.WebHookHandler do
-  @behavior LemonEx.Webhooks.Handler
+  @behaviour LemonEx.Webhooks.Handler
 
   alias Bmvp.Accounts.UserNotifier
   alias Bmvp.Articles
