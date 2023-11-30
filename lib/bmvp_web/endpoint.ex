@@ -39,6 +39,10 @@ defmodule BmvpWeb.Endpoint do
   plug Plug.RequestId
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
 
+  plug LemonEx.Webhooks.Plug
+    at: "/webhooks/lemonsqueezy",
+    handler: BmvpWeb.WebHookHandler
+
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],

@@ -42,6 +42,12 @@ defmodule Bmvp.Articles do
   """
   def get_article!(id), do: Repo.get!(Article, id)
 
+  def get_article(id) do
+    Article
+    |> Repo.get(id)
+    |> Repo.normalize_one()
+  end
+
   @doc """
   Creates a article.
 
